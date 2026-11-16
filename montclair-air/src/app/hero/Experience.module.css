@@ -1,0 +1,367 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Escena 3D fija detrás de toda la página
+   Hereda los tokens (--glow, --navy…) definidos en .main de page.module.css
+───────────────────────────────────────────────────────────────────────────── */
+.root {
+  position: relative;
+  background: #05070c;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  background:
+    radial-gradient(ellipse 70% 45% at 32% 102%, rgba(201, 139, 94, 0.28), transparent 60%),
+    linear-gradient(180deg, #05070c 0%, var(--dawn-1) 40%, #1a2434 62%, var(--dawn-2) 82%, var(--dawn-3) 100%);
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.stageReady {
+  opacity: 1;
+}
+
+.stage canvas {
+  cursor: grab;
+  outline: none;
+}
+
+.stage canvas:active {
+  cursor: grabbing;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Sin WebGL: la página sigue siendo legible sobre un fondo sólido */
+.flat .content {
+  background: rgba(5, 7, 12, 0.7);
+}
+
+.loading {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--glow);
+  animation: breathe 2.2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
+/* ── Progreso de scroll ── */
+.rail {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  z-index: 6;
+  width: 2px;
+  height: 120px;
+  margin-top: -60px;
+  background: var(--glow-dim);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.railFill {
+  width: 100%;
+  height: 100%;
+  background: var(--glow);
+  transform-origin: top;
+  transform: scaleY(0);
+  animation: railGrow linear both;
+  animation-timeline: scroll(root block);
+}
+
+@keyframes railGrow {
+  to { transform: scaleY(1); }
+}
+
+/* ── Marcadores 3D ── */
+.pinLayer {
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: auto;
+  will-change: transform;
+  transition: opacity 0.3s;
+}
+
+.pin:focus-visible,
+.cardClose:focus-visible,
+.cardCta:focus-visible {
+  outline: 2px solid var(--glow-soft);
+  outline-offset: 3px;
+}
+
+.pinDot {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--glow-soft);
+  background: rgba(7, 11, 18, 0.55);
+  box-shadow: 0 0 14px rgba(231, 238, 246, 0.45);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.pinDot::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--glow-soft);
+}
+
+.pinDot::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid var(--glow-soft);
+  opacity: 0;
+  animation: ping 2.6s ease-out infinite;
+}
+
+@keyframes ping {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.pinLabel {
+  position: absolute;
+  left: 26px;
+  white-space: nowrap;
+  padding: 6px 10px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--glow-soft);
+  background: rgba(7, 11, 18, 0.78);
+  border: 1px solid var(--glow-dim);
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none;
+}
+
+.pin:hover .pinDot,
+.pin:focus-visible .pinDot {
+  transform: scale(1.25);
+  background: rgba(231, 238, 246, 0.25);
+}
+
+.pin:hover .pinLabel,
+.pin:focus-visible .pinLabel,
+.pinDoor .pinLabel {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pinDoor .pinDot {
+  border-color: #c9a96e;
+  box-shadow: 0 0 16px rgba(201, 169, 110, 0.6);
+}
+
+.pinDoor .pinDot::after {
+  background: #c9a96e;
+}
+
+.pinDoor .pinDot::before {
+  border-color: #c9a96e;
+}
+
+.pinDoor .pinLabel {
+  color: #e6cf9f;
+  border-color: rgba(201, 169, 110, 0.5);
+}
+
+/* ── Ficha de una parte del avión ── */
+.card {
+  position: fixed;
+  z-index: 8;
+  right: 56px;
+  bottom: 48px;
+  width: 400px;
+  padding: 30px 30px 26px;
+  background: rgba(7, 11, 18, 0.78);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glow-dim);
+  border-radius: 2px;
+  animation: cardIn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cardClose {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  font-size: 0.8rem;
+  color: var(--mist);
+  transition: color 0.3s;
+}
+
+.cardClose:hover {
+  color: var(--glow-soft);
+}
+
+.cardKicker {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 12px;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 14px;
+}
+
+.cardText {
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: #c3cbd8;
+}
+
+.specs {
+  margin-top: 20px;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.specs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--glow-dim);
+  font-size: 0.72rem;
+}
+
+.specs dt {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+.specs dd {
+  color: var(--cream);
+  text-align: right;
+}
+
+.cardCta {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 28px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--glow);
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.cardCta:hover {
+  background: var(--glow-soft);
+}
+
+/* ── Cortinilla entre exterior e interior ── */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #05070c;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.curtainOn {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .card {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
+    padding: 22px;
+    max-height: 56svh;
+    overflow-y: auto;
+  }
+
+  .cardName {
+    font-size: 1.35rem;
+  }
+
+  .rail {
+    right: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .curtain,
+  .card {
+    transition-duration: 0.01ms;
+    animation: none;
+  }
+
+  .pinDot::before,
+  .loading {
+    animation: none;
+  }
+
+  .railFill {
+    animation: none;
+    transform: scaleY(0.4);
+  }
+}

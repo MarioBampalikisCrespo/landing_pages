@@ -1,0 +1,810 @@
+/* ── Design tokens ── */
+.main {
+  --navy: #070b12;
+  --navy-2: #0c121c;
+  --navy-3: #121a26;
+  --glow: #c7d6e8;
+  --glow-soft: #e7eef6;
+  --glow-dim: rgba(199, 214, 232, 0.14);
+  --mist: #8a93a6;
+  --cream: #f2f4f7;
+  --dawn-1: #0f1b2e;
+  --dawn-2: #3a2e3a;
+  --dawn-3: #c98b5e;
+  --dawn-4: #f2d9b8;
+  --font-display: var(--font-display, 'Georgia', sans-serif);
+  --font-body: var(--font-body, system-ui, sans-serif);
+
+  background: transparent;
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 56px;
+  animation: navDarken linear both;
+  animation-timeline: scroll(root block);
+  animation-range: 0px 140px;
+}
+
+@keyframes navDarken {
+  0%   { background: transparent; border-bottom: 1px solid transparent; }
+  100% { background: rgba(5, 7, 12, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--glow-dim); }
+}
+
+.navLogo {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.navLogoSub {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--glow);
+}
+
+.navLinks {
+  display: flex;
+  gap: 40px;
+}
+
+.navLinks a {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist);
+  transition: color 0.3s;
+}
+
+.navLinks a:hover { color: var(--glow-soft); }
+
+.navCta {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--glow);
+  padding: 12px 24px;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.navCta:hover {
+  background: var(--glow-soft);
+  transform: translateY(-1px);
+}
+
+.jetCard {
+  background: var(--navy-2);
+  border: 1px solid var(--glow-dim);
+  border-radius: 4px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+}
+
+.jetCard:hover {
+  transform: translateY(-6px);
+  border-color: var(--glow);
+}
+
+.jetMarkWrap {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.jetMark {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 14px var(--glow-dim));
+}
+
+.jetNumber {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+}
+
+.jetCategory {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--glow);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.jetName {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.jetDesc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--mist);
+  text-align: center;
+  flex: 1;
+  margin-bottom: 28px;
+}
+
+.jetFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.jetPrice {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.jetLink {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--glow);
+  transition: color 0.3s;
+}
+
+.jetLink:hover {
+  color: var(--glow-soft);
+}
+
+.routesBoard {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.routesBoardHead,
+.routesBoardRow {
+  display: grid;
+  grid-template-columns: 130px 1fr 200px;
+  gap: 16px;
+  padding: 18px 8px;
+}
+
+.routesBoardHead {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist);
+  border-bottom: 1px solid var(--glow-dim);
+}
+
+.routesBoardRow {
+  border-bottom: 1px solid var(--glow-dim);
+  transition: background 0.3s;
+}
+
+.routesBoardRow:hover {
+  background: var(--glow-dim);
+}
+
+.routeCode {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--glow);
+  font-variant-numeric: tabular-nums;
+}
+
+.routePair {
+  font-size: 0.92rem;
+  color: var(--cream);
+}
+
+.routeDuration {
+  font-size: 0.82rem;
+  color: var(--mist);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bookingForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 16px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.bookingField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bookingField label {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+.bookingField input,
+.bookingField select {
+  background: var(--navy-2);
+  border: 1px solid var(--glow-dim);
+  border-radius: 2px;
+  padding: 14px 14px;
+  font-size: 0.88rem;
+  color: var(--cream);
+}
+
+.bookingField input:focus,
+.bookingField select:focus {
+  outline: none;
+  border-color: var(--glow);
+}
+
+.bookingBtn {
+  grid-column: 1 / -1;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--glow);
+  padding: 16px;
+  border-radius: 2px;
+  transition: background 0.3s;
+}
+
+.bookingBtn:hover {
+  background: var(--glow-soft);
+}
+
+.bookingAlt {
+  font-size: 0.85rem;
+  color: var(--mist);
+}
+
+.bookingAlt a {
+  color: var(--glow);
+  transition: color 0.3s;
+}
+
+.bookingAlt a:hover {
+  color: var(--glow-soft);
+}
+
+.footer {
+  padding: 80px 56px 44px;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.footerTop {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+  max-width: 1280px;
+  margin: 0 auto 56px;
+}
+
+.footerLogo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.footerTagline {
+  font-size: 0.82rem;
+  color: var(--mist);
+}
+
+.footerLabel {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 14px;
+}
+
+.footerCol p,
+.footerCol a {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--mist);
+  line-height: 1.9;
+  transition: color 0.3s;
+}
+
+.footerCol a:hover {
+  color: var(--glow-soft);
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 28px;
+  border-top: 1px solid var(--glow-dim);
+  font-size: 0.78rem;
+  color: var(--mist);
+}
+
+.footerBottom a {
+  color: var(--mist);
+  transition: color 0.3s;
+}
+
+.footerBottom a:hover {
+  color: var(--glow-soft);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TOMAS: cada sección es un encuadre del avión; el contenido flota en cristal
+───────────────────────────────────────────────────────────────────────────── */
+.shot {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 110px 56px;
+}
+
+.shotShort {
+  min-height: 84svh;
+}
+
+.left { justify-content: flex-start; }
+.right { justify-content: flex-end; }
+.center { justify-content: center; }
+.bottom { align-items: flex-end; padding-bottom: 72px; }
+
+.glass {
+  pointer-events: auto;
+  width: min(520px, 100%);
+  padding: 38px 38px 34px;
+  background: rgba(7, 11, 18, 0.66);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid var(--glow-dim);
+  border-radius: 4px;
+}
+
+.glassWide { width: min(1180px, 100%); }
+.glassMid { width: min(860px, 100%); }
+
+.eyebrow,
+.sectionEyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--glow);
+  margin-bottom: 18px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+
+.lead {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #c3cbd8;
+}
+
+.centerText { text-align: center; }
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  align-items: flex-end;
+  padding-bottom: 96px;
+}
+
+.heroInner {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 640px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 10vw, 140px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 0.95;
+  color: var(--cream);
+  text-shadow: 0 2px 40px rgba(5, 7, 12, 0.6);
+}
+
+.rule {
+  width: 48px;
+  height: 1px;
+  background: var(--glow);
+  margin: 26px 0 22px;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  font-style: italic;
+  color: var(--glow-soft);
+  margin-bottom: 36px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cta,
+.ctaGhost {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px 34px;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
+}
+
+.cta {
+  color: var(--navy);
+  background: var(--glow);
+}
+
+.cta:hover {
+  background: var(--glow-soft);
+  transform: translateY(-2px);
+}
+
+.ctaGhost {
+  color: var(--cream);
+  border: 1px solid rgba(199, 214, 232, 0.4);
+  background: rgba(7, 11, 18, 0.3);
+}
+
+.ctaGhost:hover {
+  border-color: var(--glow-soft);
+  transform: translateY(-2px);
+}
+
+.heroHint {
+  position: absolute;
+  right: 56px;
+  bottom: 40px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--glow);
+  text-align: right;
+  text-shadow: 0 1px 12px rgba(5, 7, 12, 0.9);
+}
+
+/* ── Filosofía ── */
+.quote {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+/* ── Flota: cifras ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.statNumber {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.66rem;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+/* ── Unidades ── */
+.fleetHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.fleetHead .sectionTitle { margin-bottom: 0; }
+
+.fleetGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.jetCard { background: rgba(12, 18, 28, 0.6); padding: 28px 24px; }
+.jetDesc { font-size: 0.82rem; margin-bottom: 20px; }
+
+/* ── Cabina: pasos del recorrido interior ── */
+.stepIndex {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.stepNum {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--glow);
+}
+
+.stepBar {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.stepBar i {
+  flex: 1;
+  height: 2px;
+  background: var(--glow-dim);
+}
+
+.stepBar i[data-on='true'] { background: var(--glow); }
+
+.stepSpecs {
+  margin-top: 22px;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.stepSpecs > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--glow-dim);
+  font-size: 0.72rem;
+}
+
+.stepSpecs dt {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+.stepSpecs dd { color: var(--cream); text-align: right; }
+
+.servicios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 28px;
+}
+
+.servicio {
+  display: flex;
+  gap: 14px;
+  padding: 20px 24px 20px 0;
+  border-top: 1px solid var(--glow-dim);
+}
+
+.servicioDot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 9px;
+  border-radius: 50%;
+  background: var(--glow);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.servicioName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.servicioDesc {
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--mist);
+}
+
+/* ── Rutas ── */
+.routesBoard { max-width: none; margin: 0; }
+.routesBoardHead,
+.routesBoardRow { grid-template-columns: 110px 1fr 160px; padding: 14px 6px; }
+
+/* ── Testimonio ── */
+.testimonialMark {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--glow);
+  opacity: 0.4;
+  text-align: center;
+}
+
+.testimonialQuote {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--cream);
+  margin-bottom: 22px;
+}
+
+.testimonialAuthor {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--mist);
+  text-align: center;
+}
+
+/* ── Reserva ── */
+.bookingTitle {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 700;
+  color: var(--cream);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.bookingSubtitle {
+  font-size: 0.95rem;
+  color: var(--mist);
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.bookingAlt { text-align: center; }
+.bookingField input,
+.bookingField select { background: rgba(12, 18, 28, 0.7); }
+
+/* ── Footer ── */
+.footerShot { align-items: flex-end; padding: 0; min-height: 70svh; }
+.footer {
+  pointer-events: auto;
+  width: 100%;
+  padding: 72px 56px 40px;
+  background: rgba(5, 7, 12, 0.82);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .shot { padding: 100px 40px; }
+  .fleetGrid { grid-template-columns: 1fr; }
+  .servicios { grid-template-columns: 1fr 1fr; }
+  .bookingForm { grid-template-columns: 1fr 1fr; }
+  .footer { padding: 64px 40px 40px; }
+  .footerTop { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .nav { padding: 22px 40px; }
+}
+
+@media (max-width: 768px) {
+  .shot {
+    padding: 90px 16px 20px;
+    align-items: flex-end;
+  }
+  .glass { padding: 24px 22px 22px; }
+  .hero { padding-bottom: 84px; }
+  .heroHint { left: 16px; right: 16px; bottom: 36px; text-align: left; }
+  .stats { gap: 10px; margin-top: 20px; padding-top: 18px; }
+  .statNumber { font-size: 1.05rem; }
+  .statLabel { font-size: 0.56rem; }
+  .fleetHead { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .fleetGrid { max-height: 46svh; overflow-y: auto; }
+  .servicios { grid-template-columns: 1fr; max-height: 44svh; overflow-y: auto; }
+  .routesBoardHead,
+  .routesBoardRow { grid-template-columns: 84px 1fr 110px; }
+  .footerShot { padding: 0; }
+}
+
+@media (max-width: 560px) {
+  .nav { padding: 18px 24px; }
+  .navLinks { display: none; }
+  .bookingForm { grid-template-columns: 1fr; }
+  .routesBoardHead { display: none; }
+  .routesBoardRow { grid-template-columns: 1fr; gap: 4px; padding: 14px 4px; }
+  .routeDuration { text-align: left; }
+  .footer { padding: 48px 24px 32px; }
+  .footerTop { grid-template-columns: 1fr; gap: 28px; }
+  .footerBottom { flex-direction: column; gap: 12px; text-align: center; }
+}
+
+.credit {
+  max-width: 1280px;
+  margin: 18px auto 0;
+  font-size: 0.68rem;
+  line-height: 1.7;
+  color: var(--mist);
+}
+
+.credit a {
+  color: var(--glow);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
